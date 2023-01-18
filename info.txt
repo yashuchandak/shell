@@ -2,4 +2,25 @@ int execv(const char *path, char *const argv[]);
 
 int execl(const char *path, const char *arg, .../* (char  *) NULL */);
 
+==========================
+int execvp(const char* command, char* argv[]); we specify path
 
+@ek string 
+@trim
+@args ka array
+
+up key previous command store
+
+exit or ctrld
+PS1 CWD "\w$"?
+cd ?
+
+PATH=/usr/bin:/bin:/sbin
+implement a version of execvp() on your own. ?
+
+redirections
+
+// char space[] = " ";
+// char nul = '\0';
+
+char *argvd[] = {"ls", "-l\0   ", NULL};		
