@@ -4,14 +4,12 @@
 #include <string.h>
 #include <stdlib.h>
 
-int myexec(char *argv[]) {
-	char *path[] = {"/usr/bin/", "/usr/sbin/", "/usr/games/", "/snap/bin/"};
-	
+int myexec(char *argv[], char *path[]) {
 	int pid = fork();
 	if(pid == 0) {
 		
 		int i=0;
-		while(1) {
+		while(i<5) {
 			char pa[50]="";
 			strcpy(pa, path[i]);
 			strcpy(pa, strcat(pa, argv[0]));
@@ -30,8 +28,9 @@ int myexec(char *argv[]) {
 }
 
 int main() {
-	int pid;
-
+	// int pid;
+	char *PATH[10] = {"/usr/bin/", "/usr/sbin/", "/usr/games/", "/snap/bin/"};
+	int pi=4;
 	char str[1000];
 		
 	while(1) {
@@ -40,11 +39,18 @@ int main() {
 		fgets(str, 1000, stdin);
 
 		if(!strcmp(str, "exit\n")) return 0;
-		
 		char *argv[10];
 		
+		char *first = strtok(str, "=");
+		if(!strcmp(first, "PATH")) {
+			char *last = strtok(NULL, "=");
+			last = strtok(last, "\n");
+			PATH[pi] = (char *)malloc(sizeof(char)*50);
+			strcpy(PATH[pi], last);
+		}
+
 		for(int i=0; i<10; i++) {
-			argv[i] = (char *)malloc(sizeof(char)*25);	
+			argv[i] = (char *)malloc(sizeof(char)*100);	
 		}
 		
 		int i=0, j=0, k=0;
@@ -63,38 +69,6 @@ int main() {
 			k=0;
 		}
 		argv[j] = NULL;
-			myexec(argv);
+		myexec(argv, PATH);
 	}
 }
-
-
-
-// printf("df");
-		// int pid = fork();
-		// if(pid == 0) {
-			// printf("svf");
-			// char comub[50] = "/usr/bin/";
-			// strcpy(argv[0], strcat(comub, argv[0]));
-			// if(execv(comub, argv) == -1) {
-			// 	char comus[50] = "/usr/sbin/";
-			// 	strcpy(argv[0], strcat(comus, argv[0]));
-			// 	if(execv(comus, argv) == -1) {
-			// 		char comsb[50] = "/usr/games/";
-			// 		strcpy(argv[0], strcat(comus, argv[0]));
-			// 		if(execv(comsb, argv) == -1) {
-			// 			char comug[50] = "/snap/bin/";
-			// 			strcpy(argv[0], strcat(comug, argv[0]));
-			// 			if(execv(comug, argv) == -1) {
-			// 				printf("command not found\n");
-			// 			}
-			// 		}
-			// 	}
-			// }
-			// char *path[] = {"/usr/bin/"};
-			// printf("dv");
-
-			// execl("/usr/bin/ls", "-la", NULL);
-		// }
-		// else {
-			// wait(0); // wait for child
-		// } 
