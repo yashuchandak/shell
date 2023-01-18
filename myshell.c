@@ -9,7 +9,7 @@ int myexec(char *argv[], char *path[]) {
 	if(pid == 0) {
 		
 		int i=0;
-		while(i<5) {
+		while(i<4) {
 			char pa[50]="";
 			strcpy(pa, path[i]);
 			strcpy(pa, strcat(pa, argv[0]));
@@ -21,6 +21,7 @@ int myexec(char *argv[], char *path[]) {
 				break;
 			}
 		}
+		printf("command not found\n");
 	}
 	else {
 		wait(0);
