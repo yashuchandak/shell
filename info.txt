@@ -1,0 +1,5 @@
+int execv(const char *path, char *const argv[]);
+
+int execl(const char *path, const char *arg, .../* (char  *) NULL */);
+
+
