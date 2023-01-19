@@ -1,5 +1,5 @@
 #include<stdio.h>
 
 int main() {
-    printf("\ndsfhdv\n");
+    printf("a.out me a.out\n");
 }
