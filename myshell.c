@@ -12,7 +12,7 @@ int myexec(char *argv[], char *path[], int or, int ora, int ir) {
 	if (pid == 0) { // agar child ise run karta to ye kam karao 
 		if(or!=-1) {
 			close(1);
-			int fd = open(argv[or+1], O_WRONLY | O_CREAT | O_TRUNC, S_IWUSR);
+			int fd = open(argv[or+1], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR, S_IWUSR);
 			argv[or] = NULL;
 		}
 		else if(ora!=-1) {
@@ -23,7 +23,7 @@ int myexec(char *argv[], char *path[], int or, int ora, int ir) {
 		
 		if(ir!=-1) {
 			close(0);
-			int fd = open(argv[ir+1], O_RDONLY, S_IRUSR);
+			int fd = open(argv[ir+1], O_RDONLY, S_IRUSR | S_IRUSR);
 			argv[ir] = NULL;
 		}
 		
