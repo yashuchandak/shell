@@ -23,7 +23,7 @@ int myexec(char *argv[], char *path[], int or, int ora, int ir) {
 		
 		if(ir!=-1) {
 			close(0);
-			int fd = open(argv[ir+1], O_RDONLY, S_IRUSR | S_IRUSR);
+			int fd = open(argv[ir+1], O_RDONLY, S_IRUSR | S_IWUSR);
 			argv[ir] = NULL;
 		}
 		
