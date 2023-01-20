@@ -7,7 +7,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-int myexec(char *argv[], char *path[], int or, int ir) {
+int myexec(char *argv[], char *path[], int or, int ora, int ir) {
 	int pid = fork();
 	if (pid == 0) { // agar child ise run karta to ye kam karao 
 		if(or!=-1) {
@@ -15,6 +15,12 @@ int myexec(char *argv[], char *path[], int or, int ir) {
 			int fd = open(argv[or+1], O_WRONLY | O_CREAT | O_TRUNC, S_IWUSR);
 			argv[or] = NULL;
 		}
+		else if(ora!=-1) {
+			close(1);
+			int fd = open(argv[ora+1], O_WRONLY | O_CREAT | O_APPEND, S_IRUSR, S_IWUSR);
+			argv[ora] = NULL;
+		}
+		
 		if(ir!=-1) {
 			close(0);
 			int fd = open(argv[ir+1], O_RDONLY, S_IRUSR);
@@ -79,7 +85,7 @@ int main() {
 			while(last) {
 				PATH[pi] = (char *)malloc(sizeof(char) * 50);
 				strcpy(PATH[pi], last);
-				printf("%s ", PATH[pi]);
+				strcat(PATH[pi], "/");
 				pi++;
 				last = strtok(NULL, ":");
 			}
@@ -87,8 +93,8 @@ int main() {
 		}
 		else if(!strcmp(first, "PS1")) {
 			char *last = strtok(NULL, "=");
-			last = strtok(last, "\n");
-			if(!strcmp(last, "\"\\w$\"")) {
+			last = strtok(last, "\"");
+			if(!strcmp(last, "\\w$")) {
 				prompt=0;
 			}
 			else {
@@ -107,36 +113,30 @@ int main() {
 
 		strcpy(str, str2);
 
-
-
 		for (int i = 0; i < 10; i++) {
 			argv[i] = (char *)malloc(sizeof(char) * 100);
 		}
 
-		int i = 0, j = 0, k = 0, or=-1, ir=-1;
-		while (1) {
-			while (str2[i] == ' ') {
-				i++;
+		int i = 0, or=-1, ir=-1, ora=-1;
+		char *topi = strtok(str2, "\n");
+		topi = strtok(str2, " ");
+		while (topi) {
+			if(!strcmp(topi, ">")) {
+				or=i;
 			}
-			while (str2[i] != ' ' && str2[i] != '\n') {
-				if(str2[i]=='>') {
-					or = j;
-				}
-				else if(str2[i]=='<') {
-					ir = j;
-				}
-				argv[j][k] = str2[i];
-				i++;
-				k++;
+			else if(!strcmp(topi, "<")) {
+				ir=i;
 			}
-			argv[j][k] = '\0';
-			j++;
-			if (str2[i] == '\n')
-				break;
-			k = 0;
+			else if(!strcmp(topi, ">>")) {
+				ora=i;
+			}
+			
+			strcpy(argv[i], topi);
+			i++;
+			topi = strtok(NULL, " ");
 		}
-		argv[j] = NULL;
+		argv[i] = NULL;
 
-		myexec(argv, PATH, or, ir);
+		myexec(argv, PATH, or, ora, ir);
 	}
 }

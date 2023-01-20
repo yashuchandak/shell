@@ -8,5 +8,3 @@ int main() {
     strcpy(buf, hh);
     printf("%s", buf);
 }
-hahah
-   ehehe       eheheh

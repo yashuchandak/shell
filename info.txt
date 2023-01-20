@@ -3,18 +3,9 @@ int execl(const char *path, const char *arg, .../* (char  *) NULL */);
 int execvp(const char* command, char* argv[]); path apne aap dhundta
 
 ==========================
-error handling spaces=trim
+error handling spaces in case of redirection $ls>dsa        
 
-PS1="string"
-
-redirections
-
-       ls      -l      os
-
-$ls>dsa                        
-ls: write error: Bad file descriptor
-
-/home/yash/Desktop/
+\n newline se end hone wale ko kyo priority
 
 =======================================
 char *argvd[] = {"ls", "-l\0   ", NULL};	
