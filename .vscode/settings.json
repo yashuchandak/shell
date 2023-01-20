@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "nam": "c",
+        "fcntl.h": "c"
+    }
+}
