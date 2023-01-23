@@ -30,7 +30,7 @@ int myexec(char *argv[], char *path[], int or, int ora, int ir, int kahatk) {
 		int i = 0;
 		while (i < kahatk)
 		{
-			char pa[50] = "";
+			char pa[1000] = "";
 			strcpy(pa, path[i]);
 			strcpy(pa, strcat(pa, argv[0]));
 
@@ -51,15 +51,15 @@ int myexec(char *argv[], char *path[], int or, int ora, int ir, int kahatk) {
 int main() {
 	char *PATH[10] = {"", "/usr/bin/", "/usr/sbin/", "/usr/games/", "/snap/bin/"};
 	int pi = 1;
-	char str[1000];
-	char str2[1000];
+	char str[10000];
+	char str2[10000];
 
 	int prompt = 0;
-	char *PS1 = (char *)malloc(sizeof(char)*50);
+	char PS1[1000];
 
 	while (1) {
 
-		char cwd[50];
+		char cwd[1000];
 		getcwd(cwd, sizeof(cwd));
 		if(prompt == 0) {
 			printf("\n__yash__%s__:\n$", cwd);
@@ -67,7 +67,7 @@ int main() {
 		else {
 			printf("%s",PS1);
 		}
-		char *ctrld = fgets(str, 1000, stdin);
+		char *ctrld = fgets(str, 10000, stdin);
 
 		if(!ctrld || !strcmp(str, "exit\n")) {
 			return 0;
@@ -89,7 +89,7 @@ int main() {
 				str2[i-2] = str[i];
 			}
 			str2[i-2] = '\0';
-			PATH[0] = (char *)malloc(sizeof(char)*50);
+			PATH[0] = (char *)malloc(sizeof(char)*1000);
 			strcpy(PATH[0], cwd);
 			strcat(PATH[0], "/");
 			dotslash = 1;
@@ -100,8 +100,8 @@ int main() {
 				str2[i-3] = str[i];
 			}
 			str2[i-3] = '\0';
-			PATH[0] = (char *)malloc(sizeof(char)*50);
-			char temppath[50]; //(char *)malloc
+			PATH[0] = (char *)malloc(sizeof(char)*1000);
+			char temppath[1000]; //(char *)malloc
 			chdir("..");
 			getcwd(temppath, sizeof(temppath));
 			chdir(cwd);
@@ -116,7 +116,7 @@ int main() {
 			last = strtok(last, "\n");
 			last = strtok(last, ":");
 			while(last) {
-				PATH[pi] = (char *)malloc(sizeof(char) * 50);
+				PATH[pi] = (char *)malloc(sizeof(char)*1000);
 				strcpy(PATH[pi], last);
 				strcat(PATH[pi], "/");
 				pi++;
@@ -146,9 +146,9 @@ int main() {
 
 		strcpy(str, str2);
 
-		for (int i = 0; i < 10; i++) {
-			argv[i] = (char *)malloc(sizeof(char) * 100);
-		}
+		// for (int i = 0; i < 1000; i++) {
+		// 	argv[i] = (char *)malloc(sizeof(char) * 1000);
+		// }
 
 		int i = 0, or=-1, ir=-1, ora=-1;
 		char *topi = strtok(str2, "\n");
@@ -164,7 +164,8 @@ int main() {
 				ora=i;
 			}
 			
-			strcpy(argv[i], topi);
+			// strcpy(argv[i], topi);
+			argv[i] = topi;
 			i++;
 			topi = strtok(NULL, " ");
 		}
