@@ -7,7 +7,7 @@ error handling spaces in case of redirection $ls>dsa
 
 \n newline se end hone wale ko kyo priority
 
-cwd path
+cwd path ./a.out aur ../a.out
 =======================================
 char *argvd[] = {"ls", "-l\0   ", NULL};	
 
