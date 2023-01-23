@@ -7,7 +7,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-int myexec(char *argv[], char *path[], int or, int ora, int ir) {
+int myexec(char *argv[], char *path[], int or, int ora, int ir, int kahatk) {
 	int pid = fork();
 	if (pid == 0) { // agar child ise run karta to ye kam karao 
 		if(or!=-1) {
@@ -28,7 +28,7 @@ int myexec(char *argv[], char *path[], int or, int ora, int ir) {
 		}
 		
 		int i = 0;
-		while (i < 5)
+		while (i < kahatk)
 		{
 			char pa[50] = "";
 			strcpy(pa, path[i]);
@@ -73,11 +73,44 @@ int main() {
 			return 0;
 		}
 
+		if(!strcmp(ctrld,"\n")) {
+			continue;
+		}
+
 		strcpy(str2, str);
 
 		char *argv[10];
 
-		char *first = strtok(str, "=");
+		char *first=NULL;
+		int dotslash = 0;
+		if(!strncmp(str, "./", 2)) {
+			int i=2;
+			for(i; i<strlen(str); i++) {
+				str2[i-2] = str[i];
+			}
+			str2[i-2] = '\0';
+			PATH[0] = (char *)malloc(sizeof(char)*50);
+			strcpy(PATH[0], cwd);
+			strcat(PATH[0], "/");
+			dotslash = 1;
+		}
+		else if(!strncmp(str, "../", 3)) {
+			int i=3;
+			for(i; i<strlen(str); i++) {
+				str2[i-3] = str[i];
+			}
+			str2[i-3] = '\0';
+			PATH[0] = (char *)malloc(sizeof(char)*50);
+			char temppath[50]; //(char *)malloc
+			chdir("..");
+			getcwd(temppath, sizeof(temppath));
+			chdir(cwd);
+			strcpy(PATH[0], temppath);
+			strcat(PATH[0], "/");
+			dotslash = 1;
+		}	
+
+		first = strtok(str, "=");
 		if(!strcmp(first, "PATH")) {
 			char *last = strtok(NULL, "=");
 			last = strtok(last, "\n");
@@ -136,7 +169,13 @@ int main() {
 			topi = strtok(NULL, " ");
 		}
 		argv[i] = NULL;
-
-		myexec(argv, PATH, or, ora, ir);
+		if(dotslash == 1) {
+			myexec(argv, PATH, or, ora, ir, 1);
+			PATH[0] = "";
+			dotslash = 0;
+		}
+		else {
+			myexec(argv, PATH, or, ora, ir, 5);
+		}
 	}
 }
