@@ -1,18 +1,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <signal.h>
+
+int pid = INT_MIN;
+
+struct process {
+    int pid;
+    char cmd[100];
+    int status;
+};
+
+struct process processes[100];
+int n_processes = 0;
 
 int myexec(char *argv[], char *path[], int or, int ora, int ir) {
 	
-	int pid = fork();
-	if (pid == 0) {
-		// setsid(); // agar child ise run karta to ye kam karao 
+	pid = fork(); // On success, the PID of the child process is returned in the parent, and 0  is returned in the child.  On failure, -1 is returned in the parent, no child process is created,
+	
+
+	if (pid == 0) { // agar child ise run karta to ye kam karao 
 		if(or!=-1) {
 			close(1);
 			int fd = open(argv[or+1], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
@@ -46,8 +60,10 @@ int myexec(char *argv[], char *path[], int or, int ora, int ir) {
 		
 		printf("command not found\n");
 	}
-	else { // parent to wait karo child ke liye
-		wait(0);
+	else { 
+		int wstatus;
+		// idhar kuch problem
+		waitpid(-1, &wstatus, WUNTRACED);
 	}
 	return 0;
 }
@@ -68,7 +84,48 @@ void trim(char **strp) {
 	str[abhika+2]='\0';
 }
 
+void sigint_handler(int sig) {
+	kill(pid, SIGINT);
+}
+
+void sigstop_handler(int sig) {
+	// 2 bar kam nhi kar raha
+	int i=0;
+	int temp;
+	for(i; i<n_processes; i++) {
+		if(processes[i].pid == pid) {
+			processes[i].status = 0;
+		}
+	}
+	temp = i+1;
+	if(i==n_processes) {
+		processes[n_processes].pid = pid;
+		processes[n_processes].status = 0;
+		n_processes++;
+	}
+
+	kill(pid, SIGSTOP);
+	printf("\n[%d]+	Stopped", temp);
+
+}
+
+void sigcont_handler(int sig) {
+	int pid = processes[n_processes].pid;
+	kill(pid, SIGCONT);
+	for(int i=0; i<n_processes; i++) {
+		if(processes[i].pid == pid) {
+			processes[i].status = 1;
+		}
+	}
+	int stat;
+	waitpid(pid, &stat,0);
+}
+
 int main() {
+
+	signal(SIGINT, sigint_handler);
+	signal(SIGTSTP, sigstop_handler);
+	signal(SIGCONT, sigcont_handler);
 
 	char *PATH[10] = {"", "/usr/bin/", "/usr/sbin/", "/usr/games/", "/snap/bin/"};
 
@@ -100,14 +157,14 @@ int main() {
 			printf("\n__ransomware__:\n");
 		}
 		else if(prompt == 0) {
-			printf("\n%s", cwd);
+			printf("\n%s$", cwd);
 		}
 		else {
 			printf("%s",PS1);
 		}
 		
 		char *ctrld = fgets(str, 10000, stdin); // fgets()  reads in at most one less than size characters from stream and stores them into the buffer pointed to by s.  Reading  stops  after  an EOF  or a newline.  If a newline is read, it is stored into the buffer. A terminating null byte ('\0') is stored after the  last  character  in the buffer.
-	
+
 		trim(&str);
 
 		fprintf(his, "%s", str);
@@ -133,6 +190,18 @@ int main() {
 			continue;
 		}
 
+		if(!strncmp(str, "fg", 2)) {
+			// fg specific process?
+			sigcont_handler(0);
+			continue;
+		}
+		else if(!strncmp(str, "jobs", 4)) {
+			for(int i=0; i<n_processes; i++) {
+				printf("[%d]+	%d\n", i+1, processes[i].pid);
+			}
+			continue;
+		}
+
 		char *argv[100]; // 100 args akhri null rahega 
 		// consider char *argv[2] aur  cat filename kara ton nhi chalega as expected
 		// but char *argv[3] me aur cat f1 f2 kara to chalra 2no files print ho rahi !!
@@ -154,8 +223,8 @@ int main() {
 			continue;
 		}
 		else if(!strncmp(str, "PS1", 3)) {
-			char *last = strtok(NULL, "=");
-			last = strtok(last, "\"");
+			char *last = strtok(str, "\"");
+			last = strtok(NULL, "\"");
 			if(!strcmp(last, "\\w$")) {
 				prompt=0;
 			}
@@ -163,6 +232,7 @@ int main() {
 				prompt = 1;
 				strcpy(PS1, last);
 			}
+			continue;
 		}
 
 		else if (!strncmp(str, "cd", 2)) {
