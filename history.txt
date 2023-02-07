@@ -1,0 +1,330 @@
+ls
+ls > del
+cat < info.txt | head
+
+cat < info.txt | head
+cat < info.txt | head
+cat info.txt | head
+cat info.txt | head
+
+cat info.txt | head
+cat info.txt | head
+cat info.txt | head
+cat info.txt | head
+la
+cat info.txt
+cat info.txt | head
+cat info.txt | head
+cat info.txt | head
+cat info.txt | grep https
+cat info.txt | grep https
+cat info.txt | grep https
+cat info.txt | head
+ls
+cat info.txt | head
+cat info.txt | head
+cat info.txt | head
+[A[A
+[A[A
+cat info.txt | head
+cat info.txt | head
+cat info.txt | head
+ls
+cat info.txt head
+cat info.txt | head
+cat info.txt | head
+__yash__/home/yash/Desktop/sem6/os/assignments/a2__:
+cat info.txt | head
+cat info.txt | head
+$
+__yash__/home/yash/Desktop/sem6/os/assignments/a2__:
+__yash__/home/yash/Desktop/sem6/os/assignments/a2__:
+$
+__yash__/home/yash/Desktop/sem6/os/assignments/a2__:
+$command not found
+__yash__/home/yash/Desktop/sem6/os/assignments/a2__:
+[A[A
+$command not found
+$command not found
+__yash__/home/yash/Desktop/sem6/os/assignments/a2__:
+__yash__/home/yash/Desktop/sem6/os/assignments/a2__:
+$
+__yash__/home/yash/Desktop/sem6/os/assignments/a2__:
+$command not found
+__yash__/home/yash/Desktop/sem6/os/assignments/a2__:
+cat info.txt | head
+cat info.txt | head
+__yash__/home/yash/Desktop/sem6/os/assignments/a2__:
+/usr/bin/cat info.txt | /usr/bin/head
+cat info.txt | head
+ls
+ls
+head info.txt
+head info.txt | sort
+ls
+head info.txt  | sort
+head info.txt | grep his
+ls
+cat info.txt | tail
+ls
+cat info.txt | head
+cat info.txt | hea
+cat info.txt | hea
+cat info.txt | head
+ls
+cat info.txt | head
+cat info.txt | hea
+cat info.txt | hea
+cat info.txt | head
+ls
+cat info.txt | grep his
+head info.txt | head
+head
+head
+ls
+history
+ls -la
+./../yash/ls
+ls
+sl
+ping
+wc
+clear
+gnome-mines
+mv ls ./..
+ls
+mv ls ./../ls
+ls
+ls
+ping
+pwd
+pwd
+pwd
+pwd
+ls
+pwd
+./ls
+ping
+./ls
+ls
+pwd
+pwd
+ls
+ls
+aksjdbv
+pwd
+ls
+pwd
+ls
+./ls
+pwd
+ls
+./a.out
+exit
+cd sem6/os/assignments
+cd -
+cd ..
+cd ..
+cd ..
+cd ..
+history
+history
+pwd
+ls
+./ls
+ls
+pwd
+ls
+pwd
+ls
+cat info.txt
+cat tp.x
+cat tp.c
+sdv
+[
+
+
+[
+
+
+
+
+sleep 1000
+slee
+\
+[B
+[
+[B
+[
+\
+
+PS1="yash"
+[A[
+[A
+[A[
+[A
+PS1="yash"
+PS1
+ls
+PS1
+PS1="\w$"
+PS1="\w"
+PS1="yash"
+ls
+sleep 100
+fg
+sleep 100
+sleep 100
+slee
+fg
+f
+sleep 100
+sleep 100
+[A[A[
+[A[A
+[A[A[
+[A[A
+ls
+touch del
+rm del
+touch del
+rm del
+r
+
+ls
+ls
+ps -eaf | tail
+sleep 15
+slee
+sleep 15
+slee
+sleep 15
+sleep 15
+slee
+sleep 20
+[
+
+[
+
+sleep 10
+sleep 30
+ps
+p
+sleep 30
+ps -a
+p
+sleep 15
+sleep 15
+sleep 100
+ps -a
+fg
+jobs
+sleep 1000
+slee
+sleep 100
+fg
+f
+fg
+[A[
+[A
+[A[
+[A
+sleep 100
+fg
+fg
+
+
+sleep 100
+fg
+fg
+f
+ping google.com
+ps -a
+p
+ping google.com
+fg
+fg
+
+
+ls
+ping google.com
+ping goolge.com
+ping google.com
+ping google.com
+ping google.com
+fg
+fg
+ping google.com
+ls
+ping google.com
+l s-la
+ls -la
+l s-la
+jobs
+job
+jobs
+[
+
+[
+
+sleep 100
+sleep 200
+sleep 300
+jobs
+job
+jobs
+job
+sleep 100
+sleep 200
+sleep 300
+jobs
+job
+jobs
+job
+ls
+ping google.com
+jobs
+job
+jobs
+job
+ls
+ping google.com
+ls
+ping google.com
+ping google.com
+sleep 40
+ping google.com
+sleep 40
+ping google.com
+ping google.com
+ping google.com
+pin
+ping google.com
+pin
+ping google.com
+pin
+ping google.com
+pin
+ping google.com
+pin
+ping google.com
+pin
+ping google.com
+sleep 1000
+jobs
+jobs
+sleep 100
+[
+
+jobs
+[
+
+jobs
+ls
+sleep 100
+sleep 200
+slee
+sleep 100
+sleep 200
+ls
+ps -a

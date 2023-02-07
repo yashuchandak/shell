@@ -5,9 +5,26 @@ int execvp(const char* command, char* argv[]); path apne aap dhundta
 ==========================
 error handling spaces in case of redirection $ls>dsa        
 
-\n newline se end hone wale ko kyo priority
+history pe sirf 1000
+history me consecutive repeats nhi jate
 
-cwd path ./a.out aur ../a.out
+history -c -r
+
+pipe use kiya toh 2 bar history me save
+
+shell lsctrld
 =======================================
+https://stackoverflow.com/questions/10463201/getch-and-arrow-codes
+
 char *argvd[] = {"ls", "-l\0   ", NULL};	
 
+\n newline se end hone wale ko kyo priority
+
+char *arr[2];
+    printf("%ld", sizeof(arr[0]));
+    // arr[0] is a pointer aur usko malloc karege
+    // so char *argv[1024] me 1024 pointers pointing to 1024 args
+}
+
+execl("ls", "ls", NULL)
+agar current folder me ls hai to ho jata execute

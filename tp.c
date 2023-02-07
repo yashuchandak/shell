@@ -2,5 +2,8 @@
 #include<string.h>
 
 int main() {
-    printf("a.out me a.out\n");
+    // char *arr[4] = {"C","C++","Javasdgv","VBA"};
+    // printf("%s", arr[2]);
+    char *argv[3];
+    argv[3] = NULL;
 }
