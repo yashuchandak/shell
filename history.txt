@@ -328,3 +328,146 @@ sleep 100
 sleep 200
 ls
 ps -a
+ls | grep a
+ls
+ls -la
+ifconfig
+ls
+cat tp.c
+sdjvb
+ls
+l
+PS1="yash"
+sdjvb
+ls
+l
+PS1="\w$"
+exit
+PS1
+PS1="yash"
+ls > abcd
+cat < abcd
+touch aa
+sort aa
+sort aa
+sort < aa
+ls
+pwd
+ls
+ls
+which which
+which which
+[
+
+PATH=/bin;
+PS1="ransomware"
+cd ..
+PATH=;
+[
+
+PATH=/bin;
+PS1="ransomware"
+cd ..
+PATH=;
+which which
+whic
+PATH=/bin;
+PS1="ransomware"
+cd ..
+PATH=;
+which which
+whic
+PS1="ransomware"
+cd ..
+PATH=;
+pwd
+pw
+cd ..
+PATH=;
+ls
+l
+PATH=;
+ls
+ls
+gnome-mines
+ls
+ls
+ls
+l
+PATH=;
+PATH=/bin:
+PATH=
+ls
+
+
+PATH=;
+PATH=/bin:
+PATH=
+
+
+PATH=;
+PATH=/bin:
+PATH=
+ls
+ls
+pwd
+ifconfig
+ifconfi
+PATH=
+PATH=
+ls
+ls
+ls
+ls
+l
+PATH=/bin
+PATH=
+ls
+[
+
+PATH=/bin
+PATH=
+[
+
+PATH=/bin
+PATH=
+ls
+[
+
+PATH=
+[
+
+PATH=
+ls
+ls
+gnome-mines
+gnome-mine
+PATH=/bin
+PATH=
+ls
+l
+PATH=
+ls
+ls
+which
+gnome-mines
+ls
+gnome-mines
+gnome-mines
+gnome-mine
+PATH=/usr/games
+PATH=/bin
+PATH=
+gnome-mines
+gnome-mine
+PATH=/bin
+PATH=
+gnome-mines
+gnome-mine
+PATH=
+which
+whic
+PATH=
+ls
+l
+PATH=

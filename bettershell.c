@@ -88,44 +88,79 @@ void sigint_handler(int sig) {
 	kill(pid, SIGINT);
 }
 
-void sigstop_handler(int sig) {
-	// 2 bar kam nhi kar raha
-	int i=0;
-	int temp;
-	for(i; i<n_processes; i++) {
-		if(processes[i].pid == pid) {
-			processes[i].status = 0;
-		}
+// void sigstop_handler(int sig) {
+// 	// 2 bar kam nhi kar raha
+// 	int i=0;
+// 	int temp;
+// 	for(i; i<n_processes; i++) {
+// 		if(processes[i].pid == pid) {
+// 			processes[i].status = 0;
+// 		}
+// 	}
+// 	temp = i+1;
+// 	if(i==n_processes) {
+// 		processes[n_processes].pid = pid;
+// 		processes[n_processes].status = 0;
+// 		n_processes++;
+// 	}
+
+// 	kill(pid, SIGSTOP);
+// 	printf("\n[%d]+	Stopped", temp);
+
+// }
+
+// void sigcont_handler(int sig) {
+// 	int pid = processes[n_processes].pid;
+// 	kill(pid, SIGCONT);
+// 	for(int i=0; i<n_processes; i++) {
+// 		if(processes[i].pid == pid) {
+// 			processes[i].status = 1;
+// 		}
+// 	}
+// 	int stat;
+// 	waitpid(pid, &stat,0);
+// }
+
+void multipipe(char *argv[10][100], int num_pipes) {
+	
+	int myfds[num_pipes][2];
+	
+	for(int i = 0; i < num_pipes; i++) {
+    	pipe(myfds[i]);
 	}
-	temp = i+1;
-	if(i==n_processes) {
-		processes[n_processes].pid = pid;
-		processes[n_processes].status = 0;
-		n_processes++;
+	
+	int n = 0;
+	while(n < num_pipes + 1) {
+    	
+		pid = fork();
+
+		if(pid == 0) {
+        	if(n != 0) {
+				close(0);
+				dup(myfds[n-1][0]);
+			}
+
+			if(n != num_pipes-1) {
+				close(1);
+				dup(myfds[n][1]);
+        	}
+        
+			execvp(argv[n][0], argv[n]);
+    	}
 	}
 
-	kill(pid, SIGSTOP);
-	printf("\n[%d]+	Stopped", temp);
-
-}
-
-void sigcont_handler(int sig) {
-	int pid = processes[n_processes].pid;
-	kill(pid, SIGCONT);
-	for(int i=0; i<n_processes; i++) {
-		if(processes[i].pid == pid) {
-			processes[i].status = 1;
-		}
+	for( int i = 0; i < num_pipes; i++ ) {
+   		close(myfds[i][0]);
+		close(myfds[i][1]);
 	}
-	int stat;
-	waitpid(pid, &stat,0);
+
 }
 
 int main() {
 
 	signal(SIGINT, sigint_handler);
-	signal(SIGTSTP, sigstop_handler);
-	signal(SIGCONT, sigcont_handler);
+	// signal(SIGTSTP, sigstop_handler);
+	// signal(SIGCONT, sigcont_handler);
 
 	char *PATH[10] = {"", "/usr/bin/", "/usr/sbin/", "/usr/games/", "/snap/bin/"};
 
@@ -152,7 +187,7 @@ int main() {
 		char cwd[100];
 		getcwd(cwd, sizeof(cwd));
 		
-		//deafult prompt
+		// deafult prompt
 		if(prompt == -1) {
 			printf("\n__ransomware__:\n");
 		}
@@ -190,17 +225,17 @@ int main() {
 			continue;
 		}
 
-		if(!strncmp(str, "fg", 2)) {
-			// fg specific process?
-			sigcont_handler(0);
-			continue;
-		}
-		else if(!strncmp(str, "jobs", 4)) {
-			for(int i=0; i<n_processes; i++) {
-				printf("[%d]+	%d\n", i+1, processes[i].pid);
-			}
-			continue;
-		}
+		// if(!strncmp(str, "fg", 2)) {
+		// 	// fg specific process?
+		// 	sigcont_handler(0);
+		// 	continue;
+		// }
+		// else if(!strncmp(str, "jobs", 4)) {
+		// 	for(int i=0; i<n_processes; i++) {
+		// 		printf("[%d]+	%d\n", i+1, processes[i].pid);
+		// 	}
+		// 	continue;
+		// }
 
 		char *argv[100]; // 100 args akhri null rahega 
 		// consider char *argv[2] aur  cat filename kara ton nhi chalega as expected
@@ -213,6 +248,9 @@ int main() {
 			last = strtok(NULL, "=");
 			last = strtok(last, "\n");
 			last = strtok(last, ":");
+			if(!last) {
+				PATH[1]=NULL;
+			}
 			while(last) {
 				PATH[pi] = (char *)malloc(sizeof(char)*1000);
 				strcpy(PATH[pi], last);
@@ -220,6 +258,7 @@ int main() {
 				pi++;
 				last = strtok(NULL, ":");
 			}
+			PATH[pi]=NULL;
 			continue;
 		}
 		else if(!strncmp(str, "PS1", 3)) {
@@ -243,7 +282,7 @@ int main() {
 			continue;
 		}
 
-		int i = 0, or=-1, ir=-1, ora=-1;
+		int i = 0, or=-1, ir=-1, ora=-1, ind = 0, mypipesloc[10];
 		char *topi = strtok(str, "\n");
 		topi = strtok(str, " ");
 		while (topi) {
@@ -256,13 +295,21 @@ int main() {
 			else if(!strcmp(topi, ">>")) {
 				ora=i;
 			}
-			
+			else if(!strcmp(topi, "|")) {
+				mypipesloc[ind] = i;
+				ind++;
+			}
+
 			argv[i] = topi;
 			i++;
 			topi = strtok(NULL, " ");
 		}
 		argv[i] = NULL;
 		
+		// if(ind != 0) {
+		// 	multipipe({{ls | }}, ind);
+		// }
+
 		myexec(argv, PATH, or, ora, ir);
 		fclose(his);
 	}
